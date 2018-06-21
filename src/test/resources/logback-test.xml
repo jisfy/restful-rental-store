@@ -1,0 +1,7 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="com.casumo.store" level="DEBUG"/>
+    <logger name="com.zaxxer.hikari" level="ERROR"/>
+    <logger name="org.hibernate" level="ERROR"/>
+</configuration>
