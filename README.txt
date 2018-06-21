@@ -1,62 +1,67 @@
-**************              Video Rental Store       **************************
 
-Please have a look at docs/README.txt
+# A RESTful Video Rental Store API
 
-Bearing in mind how controversial is the debate about "anemic domain model" vs "domain driven design", and not having
-a clue about which school of thought you guys are coming from, I decided to do both. You can find the
-as-domain-driven-as-possible design in the non-anemic-hal branch of this project. It certainly has a nicer package
-layout, but it is not fully DDD, since I left the JPA Entity annotations bleed into the Domain classes.
-Please notice that the docs/README.txt file of those two branches also differ. For more info about the
-anemic design debate, please see [1]
+## Description
 
-[1] Fowler, Martin (2003). In Anemic Model. https://martinfowler.com/bliki/AnemicDomainModel.html
+This is an implementation of a Video Rental Store RESTful API. It is a level 3 RESTful API according to Richardson's maturity levels [1].
+Put simply, it uses Hypermedia As The Engine Of Application State, a.k.a as HATEOAS.
 
-
+The project is built using Spring Boot, and particularly Spring Data, Spring MVC and Spring HATEOAS. All resource representation is based
+on HAL [2] which is nicely supported by Spring HATEOAS. All project layout and design adheres to Domain Driven Design principles [3].
+I have tried to make the project as conformant to DDD as possible and avoid the dreadful Anemic Domain Model antipattern [4]. However it
+is still not fully DDD, since for the sake of simplicity I let the JPA Entity annotations bleed into the Domain classes.
 
 
-///////////////////////////////////////////////////////////////////////////////
+### Hypermedia and Profiles
 
-Since I am using HAL which is a really lightweight hypermedia format, at least as long as the hypermedia controls are
-concerned. Notice that you can't really express with HAL whether a client should use a POST, a PUT or DELETE with a
-HAL link representation. Other hypermedia formats, like Siren are more advanced in this regard, and allow you to
-express "actions", which contain the HTTP verb and request body to send to the endpoint. This is great since it enables
-you to provide a self contained representation of a resource. One with all possible next actions and the way to proceed
-with them. Since there is no Siren support for now in Spring, I am stuck with HAL. There is a new project in Spring,
-called Spring Affordances, which adds support for some HAL extension called HAL-FORMS [2]. This extension provides
-support for self contained resource representations as described before. However the project hasn't been publicly
-released yet. With all of this in mind, the only way I can provide semantic information about the link relations and
-semantic descriptors is by means of some out of bound documentation. Some provide this documentation in plain english,
-but it is much better if this documentation can be processed by a machine, since that enables you to build smart clients.
-ALPS is spec which supports just that. What is usually called a Profile [3].
+HAL is a rather lightweight hypermedia format. At least as long as the hypermedia controls is concerned. With HAL, you can't really express whether a client
+should use _POST_, _PUT_ or _DELETE_ with a link representation. Other hypermedia formats, like **Siren** are more advanced in this regard, and allow you to
+express **actions**, which contain both the HTTP verb and request body to send to the endpoint. This is great since it enables you to provide a fully self
+contained representation of a resource, and almost completely avoid external documentation. A representation containing all possible next actions and the
+way to proceed with them.
 
-I have been looking into ALPS in order to provide machine readable semantic information for the API. However, it seems
-ALPS support comes with spring data rest, not so much with spring hateoas. I don't really want spring data rest to
-kick in and provide the controller endpoints for the different methods in my repositories. I want to keep my own.
-I am looking at the classes
-spring-data-rest-webmvc/
+As of this writing there is no Siren support in Spring, so I am stuck with HAL. There is a new project in Spring though, called Spring Affordances, which adds
+support for a HAL extension called HAL-FORMS [5]. This extension provides support for the self contained resource representations described before.
+Regretfully the project isn't publicly available yet.
 
-src/main/java/org/springframework/data/rest/webmvc/alps/RootResourceInformationToAlpsDescriptorConverter.java
-org/springframework/data/rest/webmvc/alps/AlpsController.java, org/springframework/data/rest/webmvc/ProfileController.java
-from the Spring Data Rest project, which seem to be the ones in charge of Alps support.
-
-org/springframework/data/rest/webmvc/ProfileController.java This Controller creates the top level profile URI, which
-will include links to the corresponding profiles for the different resources.
-
-There doesn't seem to be an easy way to add ALPS support to an existing Spring HATEOAS project. The main ALPS Controller in 
-the Spring Data Rest project, ProfileController, already relies on the Spring Data Repositories class. Everything is Repository
-and PersistentEntity based. I am using ResourceSupport classes in my Spring HATEOAS project, so there isn't an easy translation
-into PersistentEntity classes. I would say that the ALPS profile implementation in Spring Data doesn't lend itself much to
-reuse for other RESTful projects that are not Repository based. Or whose Resources are not coming directly from a Spring Data
-Repository.
-
-I could maybe try to create my own ProfileController which will serve the ALPS document. In order to make things easier, I 
-think I could maybe reuse the ResourceAssemblers and add the corresponding link to the ALP section for that resource.
-There should also be something in the ProfileController that is able to discover the resources that will be served by the
-different controllers, and also to translate those resources into their corresponding ALPS representation.
+In order to try to fill the semantic gap left by HAL, some external documentation is required. One which a proper description of the link relations, what they
+mean, the HTTP verb that should be used, and a nice resource representation description. Some like to use Swagger to provide this documentation, but I feel it
+is more REST-level-2 oriented. Others like to provide the documentation in plain english. I think it is much better to provide a machine-readable documentation.
+One that we can use to build smart clients. Basically, this documentation is often called a **Profile**. A document that provides additional semantic information
+on top of a Media Type without altering it [6]. There are several Profile formats available. _XMDP_ for instance, which is suitable for microformat based media
+types. I will be looking at **ALPS**, which is JSON based and can be used later on with any Hypermedia Type of choice.
 
 
-================================================== REFERENCES =================================================
-[2] Building richer hypermedia with Spring HATEOAS
+#### A look at ALPS
+
+Spring Data REST supports ALPS out of the box. Nevertheless I am not using Spring Data REST, but Spring HATEOAS. Spring Data REST adds support to export Spring
+Data Repositories directly. Sparing you from the creation of your own Spring MVC Controllers and Resources. As useful and convenient as Spring Data REST is, I
+think it doesn't help much our DDD goals. In my humble opinion your Entity classes often end up having representation annotations, and I think it is better to
+have the Domain Model as cleanly segregated from the infrastructure as possible. Thus, I am not the biggest fan of adding even more annotations to the Domain
+Model classes. Remember they are already polluted with Java Persistence Annotations. Something I am not quite happy about.
+
+Spring HATEOAS comes with several ALPS support classes. However, it lacks any kind of __profile__ controller, and all the logic provided by Spring Data REST.
+You could think of using just Spring Data REST's ALPS support, and sticking to Spring HATEOAS for the rest. I have given it a try, but Spring Data REST's
+controllers are too tightly coupled to the Spring Data Repositories and PersistentEntity classes. The whole idea of exposing Repositories as RESTful resources
+seems to be deeply ingrained in Spring Data REST. You can have a look at the class org/springframework/data/rest/webmvc/ProfileController.java for more information.
+I would say that the ALPS profile implementation in Spring Data doesn't lend itself too much for reuse in other RESTful projects that are not Repository based.
+Or whose Resources are not coming directly from a Spring Data Repository.
+
+A final idea worth exploring could be the creation of my own ProfileController, which would serve the final ALPS document. In order to make things easier, I
+think I could maybe reuse the ResourceAssemblers and add the corresponding link to the ALP section for that resource. There should also be something in the custom
+ProfileController that was able to discover the resources that would be served by the different controllers, and also to translate those resources into their
+corresponding ALPS representation.
+
+
+## REFERENCES
+
+[1] Webber, Parastatidis, Robinson (2010). Web Friendliness and the Richardson Maturity Model.
+    In "Rest in Practice, Hypermedia and Systems Architecture" (pp. 18-20). O'Reilly
+[2] Kelly, Mike (2013). In HAL, Hypertext Application Language. http://stateless.co/hal_specification.html
+[3] Evans, Eric. (2003). Domain Driven Design. Addison Wesley
+[4] Fowler, Martin (2003). In Anemic Model. https://martinfowler.com/bliki/AnemicDomainModel.html
+[5] Building richer hypermedia with Spring HATEOAS
     https://spring.io/blog/2018/01/12/building-richer-hypermedia-with-spring-hateoas
+[6] Richardson, Leonard. Amundsen, Mike (2013). 8-Profiles. In 'RESTful Web APIs' (pp 133-155). O'Reilly
 
-[3] Richardson, Leonard. Amundsen, Mike. 8-Profiles. In 'RESTful Web APIs' (pp 133-155). O'Reilly 2013.
+
