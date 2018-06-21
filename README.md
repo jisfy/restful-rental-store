@@ -3,12 +3,12 @@
 
 ## Description
 
-This is an implementation of a Video Rental Store RESTful API. It is a level 3 RESTful API according to Richardson's maturity levels [1].
+This is an implementation of a Video Rental Store RESTful API. It is a level 3 RESTful API according to Richardson's maturity levels [1](#references).
 Put simply, it uses Hypermedia As The Engine Of Application State, a.k.a as HATEOAS.
 
 The project is built using Spring Boot, and particularly Spring Data, Spring MVC and Spring HATEOAS. All resource representation is based
-on HAL [2] which is nicely supported by Spring HATEOAS. All project layout and design adheres to Domain Driven Design principles [3].
-I have tried to make the project as conformant to DDD as possible and avoid the dreadful Anemic Domain Model antipattern [4]. However it
+on HAL [2](#references) which is nicely supported by Spring HATEOAS. All project layout and design adheres to Domain Driven Design principles [3](#references).
+I have tried to make the project as conformant to DDD as possible and avoid the dreadful Anemic Domain Model antipattern [4](#references). However it
 is still not fully DDD, since for the sake of simplicity I let the JPA Entity annotations bleed into the Domain classes.
 
 
@@ -21,14 +21,14 @@ contained representation of a resource, and almost completely avoid external doc
 way to proceed with them.
 
 As of this writing there is no Siren support in Spring, so I am stuck with HAL. There is a new project in Spring though, called Spring Affordances, which adds
-support for a HAL extension called HAL-FORMS [5]. This extension provides support for the self contained resource representations described before.
+support for a HAL extension called HAL-FORMS [5](#references). This extension provides support for the self contained resource representations described before.
 Regretfully the project isn't publicly available yet.
 
 In order to try to fill the semantic gap left by HAL, some external documentation is required. One which a proper description of the link relations, what they
 mean, the HTTP verb that should be used, and a nice resource representation description. Some like to use Swagger to provide this documentation, but I feel it
 is more REST-level-2 oriented. Others like to provide the documentation in plain english. I think it is much better to provide a machine-readable documentation.
 One that we can use to build smart clients. Basically, this documentation is often called a **Profile**. A document that provides additional semantic information
-on top of a Media Type without altering it [6]. There are several Profile formats available. _XMDP_ for instance, which is suitable for microformat based media
+on top of a Media Type without altering it [6](#references). There are several Profile formats available. _XMDP_ for instance, which is suitable for microformat based media
 types. I will be looking at **ALPS**, which is JSON based and can be used later on with any Hypermedia Type of choice.
 
 
@@ -55,13 +55,13 @@ corresponding ALPS representation.
 
 ## REFERENCES
 
-[1] Webber, Parastatidis, Robinson (2010). Web Friendliness and the Richardson Maturity Model.
+* [1]: Webber, Parastatidis, Robinson (2010). Web Friendliness and the Richardson Maturity Model.
     In "Rest in Practice, Hypermedia and Systems Architecture" (pp. 18-20). O'Reilly
-[2] Kelly, Mike (2013). In HAL, Hypertext Application Language. http://stateless.co/hal_specification.html
-[3] Evans, Eric. (2003). Domain Driven Design. Addison Wesley
-[4] Fowler, Martin (2003). In Anemic Model. https://martinfowler.com/bliki/AnemicDomainModel.html
-[5] Building richer hypermedia with Spring HATEOAS
+* [2]: Kelly, Mike (2013). In HAL, Hypertext Application Language. http://stateless.co/hal_specification.html
+* [3]: Evans, Eric. (2003). Domain Driven Design. Addison Wesley
+* [4]: Fowler, Martin (2003). In Anemic Model. https://martinfowler.com/bliki/AnemicDomainModel.html
+* [5]: Building richer hypermedia with Spring HATEOAS
     https://spring.io/blog/2018/01/12/building-richer-hypermedia-with-spring-hateoas
-[6] Richardson, Leonard. Amundsen, Mike (2013). 8-Profiles. In 'RESTful Web APIs' (pp 133-155). O'Reilly
+* [6]: Richardson, Leonard. Amundsen, Mike (2013). 8-Profiles. In 'RESTful Web APIs' (pp 133-155). O'Reilly
 
 
