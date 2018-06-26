@@ -1,0 +1,33 @@
+== Modify
+=== Description
+Modifies an existing Rental, changing the Films to rent and/or the duration in days. In order to modify a rental,
+a POST request should be sent to the URI associated with the link where this link relation appears. The request should
+contain a body conforming to the format described below and the corresponding Content-Type. Notice that only Rentals
+which are in AWAITING_PAYMENT state support modifications. Trying to update a Rental in any other state will result
+in an error response
+
+==== Request
+
+[format="psv",width="60%",cols="2", separator="#"]
+[frame="topbot",grid="none"]
+|======
+#*Method*#POST
+#*Body*
+v#
+ {
+   "days": number,
+   "filmIds" : [number]
+ }
+#*Content-Type*#application/json
+|======
+
+==== Response
+
+[grid="rows",format="psv", separator="#"]
+[options="header",cols="<,<70%"]
+|===========================
+#Code#Message
+#200#Successfully performed
+#400#Can't create a rental with unavailable Films. Please check Film ids : <list of film ids not available>
+#405#Can't update a Rental which is not in AWAITING_PAYMENT state
+|===========================

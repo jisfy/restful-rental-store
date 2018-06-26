@@ -72,7 +72,6 @@ public class VideoRentalService {
      * @throws IllegalStateException <p>in case the return can't be performed because the given Rental is not in the
      * RentalStatus.PAID state, which is mandatory for this operation</p>
      */
-    @Transactional
     public Rental returnRental(RentalId rentalId) {
         Rental rental = rentalRepository.findById(rentalId).get();
         try {

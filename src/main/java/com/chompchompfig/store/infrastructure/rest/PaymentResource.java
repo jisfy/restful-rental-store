@@ -8,11 +8,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.core.Relation;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @ApiModel(description = "A representation of a Payment resource", value = "Payment")
+@Relation(collectionRelation = "payments", value = "payment")
 @JsonPropertyOrder({"paymentId", "status", "amount", "currency", "_links"})
 public class PaymentResource extends ResourceSupport {
 

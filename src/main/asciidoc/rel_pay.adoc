@@ -1,0 +1,26 @@
+== Pay
+=== Description
+Performs a payment which is associated with a Rental. Only rentals in the AWAITING_PAYMENT or
+AWAITING_PAYMENT_OVERDUE state can be paid. In order to perform a payment, a POST request should be sent to the URI associated with the link where this link relation appears.
+The request body must be empty
+
+==== Request
+
+[format="csv",width="60%",cols="2"]
+[frame="topbot",grid="none"]
+|======
+*Method*, POST
+*Body*, empty
+|======
+
+==== Response
+
+[grid="rows",format="dsv"]
+[options="header",cols="<,<70%"]
+|===========================
+Code:Message
+200:Successfully performed
+404:The selected Payment does not exist, and can't be performed
+405:The selected Payment can't be performed due to the Rental current state. The Rental must be in AWAITING_PAYMENT or AWAITING_PAYMENT_OVERDUE state in order to proceed
+409:The selected Payment can't be performed due to the Rental current state. Probably some Films included in the Rental are no longer available to rent. You should either cancel or modify the Rental to get rid of those Films
+|===========================

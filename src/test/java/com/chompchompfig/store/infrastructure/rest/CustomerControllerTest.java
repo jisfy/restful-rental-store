@@ -55,7 +55,7 @@ public class CustomerControllerTest {
         Mockito.when(customerRepository.findAll()).thenReturn(customers);
         this.mockMvc.perform(get("/store/customers")).andExpect(status().isOk())
                 .andExpect(content().contentType(MediaTypes.HAL_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$._embedded['ex:customerResourceList'].length()").value(customers.size()))
+                .andExpect(jsonPath("$._embedded['ex:customers'].length()").value(customers.size()))
                 .andExpect(jsonPath(jsonPathTools.jsonPathForCustomerPropertyInList(
                         0, "customerId")).value(customers.get(0).getId()))
                 .andExpect(jsonPath(jsonPathTools.jsonPathForCustomerPropertyInList(

@@ -57,7 +57,7 @@ public class PaymentControllerTest {
         Mockito.when(paymentRepository.findAll()).thenReturn(payments);
         this.mockMvc.perform(get("/store/payments")).andExpect(status().isOk())
                 .andExpect(content().contentType(MediaTypes.HAL_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$._embedded['ex:paymentResourceList'].length()").value(payments.size()))
+                .andExpect(jsonPath("$._embedded['ex:payments'].length()").value(payments.size()))
                 .andExpect(jsonPath(jsonPathTools.jsonPathForPaymentPropertyInList(0, "paymentId.rentalId"))
                         .value(payments.get(0).getId().getRentalId()))
                 .andExpect(jsonPath(jsonPathTools.jsonPathForPaymentPropertyInList(0, "paymentId.id"))

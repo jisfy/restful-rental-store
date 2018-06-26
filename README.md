@@ -4,7 +4,7 @@
 ## Description
 
 This is an implementation of a Video Rental Store RESTful API. It is a level 3 RESTful API according to Richardson's maturity levels [1](#references).
-Put simply, it uses Hypermedia As The Engine Of Application State, a.k.a as HATEOAS.
+Put simply, it uses Hypermedia As The Engine Of Application State, a.k.a HATEOAS.
 
 The project is built using Spring Boot, and particularly Spring Data, Spring MVC and Spring HATEOAS. All resource representation is based
 on HAL [2](#references) which is nicely supported by Spring HATEOAS. All project layout and design adheres to Domain Driven Design principles [3](#references).
@@ -24,7 +24,7 @@ As of this writing there is no Siren support in Spring, so I am stuck with HAL. 
 support for a HAL extension called HAL-FORMS [5](#references). This extension provides support for the self contained resource representations described before.
 Regretfully the project isn't publicly available yet.
 
-In order to try to fill the semantic gap left by HAL, some external documentation is required. One which a proper description of the link relations, what they
+In order to try to fill the semantic gap left by HAL, some external documentation is required. One with a proper description of the link relations, what they
 mean, the HTTP verb that should be used, and a nice resource representation description. Some like to use Swagger to provide this documentation, but I feel it
 is more REST-level-2 oriented. Others like to provide the documentation in plain english. I think it is much better to provide a machine-readable documentation.
 One that we can use to build smart clients. Basically, this documentation is often called a **Profile**. A document that provides additional semantic information
@@ -53,7 +53,7 @@ ProfileController that was able to discover the resources that would be served b
 corresponding ALPS representation.
 
 
-## REFERENCES
+### References
 
 * [1]: Webber, Parastatidis, Robinson (2010). Web Friendliness and the Richardson Maturity Model.
     In "Rest in Practice, Hypermedia and Systems Architecture" (pp. 18-20). O'Reilly

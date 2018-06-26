@@ -1,0 +1,28 @@
+== Return
+=== Description
+Returns a Rental. All Films rented are returned and made available again. Only rentals in PAID state can be returned.
+In order to return a rental, a DELETE request should be sent to the URI associated with the link where this link
+relation appears. The request body must be empty
+
+==== Request
+
+[format="psv",width="60%",cols="2",separator="#"]
+[frame="topbot",grid="none"]
+|======
+#*Method*#DELETE
+#*Body*#empty
+|======
+
+==== Response
+
+[grid="rows",format="psv", separator="#"]
+[options="header",cols="<,<70%"]
+|===========================
+#Code#Message
+#200#Successfully performed
+#404#The selected Rental does not exist
+#405#The selected Rental can't be returned. It is in an invalid state for the operation. Only Rentals in the PAID state
+can be returned. PAID Rentals can also be rejected with the same error if they are overdue. Rentals would then be
+transitioned into the AWAITING_PAYMENT_OVERDUE state. A new Payment would need to be performed in order for the Rental
+to be successfully RETURNED, which will then be done automatically
+|===========================

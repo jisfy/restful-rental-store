@@ -9,6 +9,7 @@ import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.core.EmbeddedWrapper;
 import org.springframework.hateoas.core.EmbeddedWrappers;
+import org.springframework.hateoas.core.Relation;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @ApiModel(description = "A representation of a Rental resource", value = "Rental")
+@Relation(collectionRelation = "rentals", value = "rental")
 @JsonPropertyOrder({"rentalId", "status", "customer", "rentalStartDate", "days", "overdue", "films", "_embedded", "_links"})
 public class RentalResource extends ResourceSupport {
 

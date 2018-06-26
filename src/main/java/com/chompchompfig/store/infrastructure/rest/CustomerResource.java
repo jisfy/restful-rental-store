@@ -11,6 +11,7 @@ import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.core.EmbeddedWrapper;
 import org.springframework.hateoas.core.EmbeddedWrappers;
+import org.springframework.hateoas.core.Relation;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +20,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @ApiModel(description = "A representation of a Customer resource", value = "Customer")
+@Relation(collectionRelation = "customers", value = "customer")
 @JsonPropertyOrder({"customerId", "name", "lastName", "pointsInCard", "_embedded", "_links"})
 public class CustomerResource extends ResourceSupport {
 

@@ -54,6 +54,6 @@ public class StoreApplication {
 
     @Bean
     public CurieProvider curieProvider() {
-        return new DefaultCurieProvider("ex", new UriTemplate("http://localhost/rels/{rel}"));
+        return new DefaultCurieProvider("ex", new UriTemplate("/docs/rel_{rel}.html"));
     }
 }

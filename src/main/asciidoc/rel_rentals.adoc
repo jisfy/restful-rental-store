@@ -1,0 +1,31 @@
+== Rentals
+=== Description
+Creates a new Rental with some Films and for the given number of days. In order to create a rental, a POST request
+should be sent to the URI associated with the link where this link relation appears. The request should contain a body
+conforming to the format described below and the corresponding Content-Type
+
+==== Request
+
+[format="psv",width="60%",cols="2", separator="#"]
+[frame="topbot",grid="none"]
+|======
+#*Method*#POST
+#*Body*
+v#
+ {
+   "customerId" : number,
+   "days" : number,
+   "filmIds" : [number]
+ }
+#*Content-Type*#application/json
+|======
+
+==== Response
+
+[grid="rows",format="psv", separator="#"]
+[options="header",cols="<,<70%"]
+|===========================
+#Code#Message
+#200#Successfully performed
+#400#The Rental can't be created, probably because some of the Films included are not available to rent
+|===========================

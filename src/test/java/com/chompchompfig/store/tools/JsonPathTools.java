@@ -14,25 +14,25 @@ public class JsonPathTools {
 
     public String jsonPathForFilmPropertyInList(int indexOfFilmInList, String propertyName) {
         String jsonPathForFilmPropertyInList = MessageFormat.format(
-                "$._embedded[''ex:filmResourceList''][{0, number, integer}].{1}", indexOfFilmInList, propertyName);
+                "$._embedded[''ex:films''][{0, number, integer}].{1}", indexOfFilmInList, propertyName);
         return jsonPathForFilmPropertyInList;
     }
 
     public String jsonPathForCustomerPropertyInList(int indexOfCustomerInList, String propertyName) {
         String jsonPathForCustomerPropertyInList = MessageFormat.format(
-                "$._embedded[''ex:customerResourceList''][{0, number, integer}].{1}", indexOfCustomerInList, propertyName);
+                "$._embedded[''ex:customers''][{0, number, integer}].{1}", indexOfCustomerInList, propertyName);
         return jsonPathForCustomerPropertyInList;
     }
 
     public String jsonPathForPaymentPropertyInList(int indexOfPaymentInList, String propertyName) {
         String jsonPathForPaymentPropertyInList = MessageFormat.format(
-                "$._embedded[''ex:paymentResourceList''][{0, number, integer}].{1}", indexOfPaymentInList, propertyName);
+                "$._embedded[''ex:payments''][{0, number, integer}].{1}", indexOfPaymentInList, propertyName);
         return jsonPathForPaymentPropertyInList;
     }
 
     public String jsonPathForRentalPropertyInList(int indexOfRentalInList, String propertyName) {
         String jsonPathForRentalPropertyInList = MessageFormat.format(
-                "$._embedded[''ex:rentalResourceList''][{0, number, integer}].{1}", indexOfRentalInList, propertyName);
+                "$._embedded[''ex:rentals''][{0, number, integer}].{1}", indexOfRentalInList, propertyName);
         return jsonPathForRentalPropertyInList;
     }
 

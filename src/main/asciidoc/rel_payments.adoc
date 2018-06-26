@@ -1,0 +1,21 @@
+== Payments
+=== Description
+Gets the list of Payments in the Store
+
+==== Request
+
+[format="csv",width="60%",cols="2"]
+[frame="topbot",grid="none"]
+|======
+*Method*, GET
+*Body*, empty
+|======
+
+==== Response
+
+[grid="rows",format="dsv"]
+[options="header",cols="<,<70%"]
+|===========================
+Code:Message
+200:Successfully retrieved
+|===========================

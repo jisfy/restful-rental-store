@@ -48,7 +48,7 @@ public class FilmControllerTest {
         Mockito.when(filmRepository.findAll()).thenReturn(films);
         this.mockMvc.perform(get("/store/films")).andExpect(status().isOk())
                 .andExpect(content().contentType(MediaTypes.HAL_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$._embedded['ex:filmResourceList'].length()").value(films.size()))
+                .andExpect(jsonPath("$._embedded['ex:films'].length()").value(films.size()))
                 .andExpect(jsonPath(jsonPathTools.jsonPathForFilmNameInList(0))
                         .value(films.get(0).getName()))
                 .andExpect(jsonPath(jsonPathTools.jsonPathForFilmCategoryInList(0)).
